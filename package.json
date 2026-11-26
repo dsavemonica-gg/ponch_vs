@@ -1,0 +1,100 @@
+{
+  "name": "practicas-extenciones",
+  "version": "1.0.0",
+  "publisher": "Dsave",
+  "description": "",
+  "main": "./dist/main.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "ponch.extension.activate",
+        "title": "Ponch: Activar extensión"
+      },
+      {
+        "command": "ponch.extension.deactivate",
+        "title": "Ponch: Desactivar extensión"
+      },
+      {
+        "command": "ponch.openCustomizer",
+        "title": "Abrir ventana de customización de Ponch"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "ponch.menu",
+        "label": "Ponch"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "ponch.openCustomizer",
+          "when": "false"
+        },
+        {
+          "command": "ponch.extension.activate",
+          "when": "!ponch.isActive"
+        },
+        {
+          "command": "ponch.extension.deactivate",
+          "when": "ponch.isActive"
+        }
+      ],
+      "editor/context": [
+        {
+          "submenu": "ponch.menu",
+          "group": "navigation",
+          "when": "ponch.isActive"
+        }
+      ],
+      "explorer/context": [
+        {
+          "submenu": "ponch.menu",
+          "group": "navigation",
+          "when": "ponch.isActive"
+        }
+      ],
+      "ponch.menu": [
+        {
+          "command": "ponch.openCustomizer",
+          "when": "ponch.isActive"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "tsx esbuild.ts",
+    "watch": "tsx esbuild.ts --watch",
+    "package": "pnpm check-types && tsx esbuild.ts --production",
+    "vscode:prepublish": "pnpm package",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "vscode": "^1.145.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.18.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.18.0",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/vscode": "^1.145.0",
+    "@vscode/vsce": "^4.1.0",
+    "esbuild": "^0.28.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
